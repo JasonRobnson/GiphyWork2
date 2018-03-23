@@ -12,14 +12,41 @@ let giphyButtonObj = {
             topicButtons.attr("data-person", giphyButtonObj.topics[t]);
             //make sure to ask a question about this line below to double check your understanding on how its working.
             topicButtons.append(giphyButtonObj.topics[t]);
-            $(".gifButton").append(topicButtons)
+            $(".gifButton").append(topicButtons);
+    
         }
-        
+    },
+    loadSearchTopcis: function(){
 
     },
+    queryTopic: function(){
+        $.ajax({
+            url: queryUrl,
+            method: "Get"
+        })
+    .then(function(response){
+        console.log(response);
+    })
+
+    },
+
 };
 
+let person = $(this).attr("data-person");
+
+let queryUrl = "https://api.giphy.com/v1/gifs/search?q=" + person + "&api_key=dc6zaTOxFJmzC&limit=15";
+
 $(document).ready(giphyButtonObj.loadTopicButtons());
+
+$(".topics").on("click", function(e) {
+    console.log("The click works!");
+    giphyButtonObj.queryTopic();
+});
+
+//Click function on dynamic loaded buttons
+
+
+
 
 
 
