@@ -7,7 +7,7 @@
 $(".btn").on("click", function(e) {
     console.log("data-person");
     let person = $(this).attr("data-person");
-    let queryUrl ="https://api.giphy.com/v1/gifs/search?q=" + person + "&api_key=dc6zaTOxFJmzC&limit=7";
+    let queryUrl ="https://api.giphy.com/v1/gifs/search?q=" + person + "&api_key=dc6zaTOxFJmzC&limit=15";
 
     $.ajax({
         url: queryUrl,
@@ -25,10 +25,10 @@ $(".btn").on("click", function(e) {
         var para = $("<p>").text("Ratings:" + ratings);
         let gifImage = $("<img>");
         gifImage.attr("src", results[i].images.fixed_height.url);
-        newDiv.prepend(results);
-        newDiv.prepend(para);
-        newDiv.prepend(gifImage);
-        newDiv.prepend(gifDiv);
+        newDiv.append(results);
+        newDiv.append(para);
+        newDiv.append(gifImage);
+        newDiv.append(gifDiv);
     }
 })
 });
