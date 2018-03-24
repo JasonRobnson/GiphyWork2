@@ -88,7 +88,7 @@ $(".topics").on("click", function(e) {
         let newDiv = $(".gifHolder");
         let title = results[i].title;
         let gifDiv = $("<div>").addClass("TheGifDiv");
-        var para = $("<p>").html("<strong>" + title + "</strong>");
+        let para = $("<p>").html("<strong>" + title + "</strong>");
         let gifImage = $("<img>");
         gifImage.attr("src", results[i].images.fixed_height.url);
         newDiv.prepend(results);
@@ -103,8 +103,40 @@ $(".topics").on("click", function(e) {
 
 $("#searchButton").on("click", function (){
     let searchValue = $("#searchBox").val();
-    console.log(searchValue);
-})
+    let queryUrl ="https://api.giphy.com/v1/gifs/search?q=" + searchValue + "&api_key=dc6zaTOxFJmzC&limit=15";
+   
+    $.ajax({
+        url: queryUrl,
+        method: "Get"
+    })
+    .then(function(response){
+        let results = response.data;
+       for(let i = 0; i < results.length; i++){
+           let newDiv = $(".gifHolder");
+           let title = results [i].title;
+           let gifDiv = $("<div>").addClass("TheGifDiv");
+           let para = $("<p>").html("<strong>" + title + "</strong>");
+           let gifImage = $("<img>");
+           gifImage = $("<img>");
+           gifImage.attr("src", results[i].images.fixed_height.url);
+           newDiv.prepend(results);
+           newDiv.prepend(para);
+           newDiv.prepend(gifImage);
+           newDiv.prepend(gifDiv);
+       }
+       //if (searchValue == **a string value**) { then the  statement below here}
+       let searchButton = $("<button>");
+       searchButton.addClass("topics");
+       searchButton.attr("data-person", searchValue);
+       console.log(searchValue);
+        //make sure to ask a question about this line below to double check your understanding on how its working.
+        searchButton.append(searchValue);
+        $(".gifButton").append(searchButton);
+    })
+    
+});
+
+
 
 
 // $(".gifHolder").on("click", function(){
