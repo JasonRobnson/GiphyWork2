@@ -24,7 +24,6 @@ let giphyButtonObj = {
 
 };
 
-
 $(document).ready(giphyButtonObj.loadTopicButtons());
 
 $(".topics").on("click", function(e) {
@@ -49,10 +48,15 @@ $(".topics").on("click", function(e) {
         let gifDiv = $("<div>").addClass("TheGifDiv");
         let para = $("<p>").html("<strong>" + title + "</strong>");
         let gifImage = $("<img>");
-        gifImage.attr("src", results[i].images.fixed_height.url);
+        let animated = response.data[i].images.fixed_height.url;   
+        let still = response.data[i].images.fixed_height_still.url;
+        gifImage.attr("src", still);
+        gifImage.attr("data-still", still);
+        gifImage.attr("data-animated", animated);
+        gifImage.attr("data-state",'still');
         newDiv.prepend(results);
-        newDiv.prepend(para);
-        newDiv.prepend(gifImage);
+        gifDiv.prepend(para);
+        gifDiv.prepend(gifImage);
         newDiv.prepend(gifDiv);
     }
 })
@@ -76,11 +80,13 @@ $("#searchButton").on("click", function (){
            let gifDiv = $("<div>").addClass("TheGifDiv");
            let para = $("<p>").html("<strong>" + title + "</strong>");
            let gifImage = $("<img>");
+           let animated = response.data[i].images.fixed_height.url;   
+           let still = response.data[i].images.fixed_height_still.url;
            gifImage = $("<img>");
-           gifImage.attr("src", results[i].images.fixed_height.url);
+           gifImage.attr("src", still);
            newDiv.prepend(results);
-           newDiv.prepend(para);
-           newDiv.prepend(gifImage);
+           gifDiv.prepend(para);
+           gifDiv.prepend(gifImage);
            newDiv.prepend(gifDiv);
        }
        //if (searchValue == **a string value**) { then the  statement below here}
@@ -97,16 +103,15 @@ $("#searchButton").on("click", function (){
 
 
 
-$(".gifHolder").on("click", function(){
+$(".TheGifDiv").on("click", function(){
     console.log("You clicked the GifDiv")
     //ask for a walkthrough on this information within the object, for memory purposes. 
     let state = $(this).attr("data-state");
-    if (state === "still") {
-        let animateURL = $(this).attr("data-animate");
-        $(this).attr("src", animateURL);
-        $(this).attr("data-state", "animate");
-         } else if (state ==="animate") {
-             $(this).attr("src",$(this).attr("data-still"));
+    if (state == "still") {
+        $(this).attr("src" ,$(this).data('animated'));
+        $(this).attr("data-state", "animated");
+         } else if (state == "animated") {
+             $(this).attr("src" ,$(this).data(still));
              $(this).attr("data-state", "still")
          }
 });
