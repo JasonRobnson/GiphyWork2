@@ -63,7 +63,7 @@ $(".topics").on("click", function(e) {
 $("#searchButton").on("click", function (){
     let searchValue = $("#searchBox").val();
     let queryUrl ="https://api.giphy.com/v1/gifs/search?q=" + searchValue + "&api_key=dc6zaTOxFJmzC&limit=15";
-   
+    gifHolder.empty();
     $.ajax({
         url: queryUrl,
         method: "Get"
@@ -77,7 +77,7 @@ $("#searchButton").on("click", function (){
            let para = $("<p>").html("<strong>" + title + "</strong>");
            let gifImage = $("<img>");
            gifImage = $("<img>");
-           gifImage.attr("src", results[i].images.original_still);
+           gifImage.attr("src", results[i].images.fixed_height.url);
            newDiv.prepend(results);
            newDiv.prepend(para);
            newDiv.prepend(gifImage);
