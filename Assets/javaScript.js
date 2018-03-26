@@ -50,6 +50,7 @@ $(".topics").on("click", function(e) {
         let gifImage = $("<img>");
         let animated = response.data[i].images.fixed_height.url;   
         let still = response.data[i].images.fixed_height_still.url;
+        gifImage.addClass("gifimage");
         gifImage.attr("src", still);
         gifImage.attr("data-still", still);
         gifImage.attr("data-animated", animated);
@@ -82,8 +83,11 @@ $("#searchButton").on("click", function (){
            let gifImage = $("<img>");
            let animated = response.data[i].images.fixed_height.url;   
            let still = response.data[i].images.fixed_height_still.url;
-           gifImage = $("<img>");
+           gifImage.addClass("gifimage");
            gifImage.attr("src", still);
+           gifImage.attr("data-still", still);
+           gifImage.attr("data-animated", animated);
+           gifImage.attr("data-state",'still');
            newDiv.prepend(results);
            gifDiv.prepend(para);
            gifDiv.prepend(gifImage);
@@ -96,6 +100,7 @@ $("#searchButton").on("click", function (){
        console.log(searchValue);
         searchButton.append(searchValue);
         $(".gifButton").append(searchButton);
+        return false
     })
     
 });
@@ -103,7 +108,7 @@ $("#searchButton").on("click", function (){
 
 
 
-$(".TheGifDiv").on("click", function(){
+$(document).on("click",".gifimage", function(){
     console.log("You clicked the GifDiv")
     //ask for a walkthrough on this information within the object, for memory purposes. 
     let state = $(this).attr("data-state");
@@ -111,7 +116,7 @@ $(".TheGifDiv").on("click", function(){
         $(this).attr("src" ,$(this).data('animated'));
         $(this).attr("data-state", "animated");
          } else if (state == "animated") {
-             $(this).attr("src" ,$(this).data(still));
+             $(this).attr("src" ,$(this).data("still"));
              $(this).attr("data-state", "still")
          }
 });
